@@ -91,7 +91,7 @@ class store:
 
 
 if __name__ == "__main__":
-    cls = store("C:/Users/PREMRAJ/Desktop/fworks/data_store.json") #define the location of the file (or) keep it as "store(None)"
+    cls = store("C:/Users/PREMRAJ/Desktop/crd_operations/data_store.json") #define the location of the file (or) keep it as "store(None)"
     cls.create("kumar" , {"age":20 , "height": 170 , "ttl" : 2})
     cls.create("raj" , {"age":80 , "height": 10 , "ttl" : 10})
     cls.create("bheem" , {"age":80 , "height": 10 , "ttl" : 5})
