@@ -1,6 +1,8 @@
 import os,json,datetime,heapq,threading
 from threading import Thread
 
+
+
 class store:
     defloc = "" 
     def __init__(self ,  loc): #Constructor for file location
@@ -20,17 +22,16 @@ class store:
         while True:
             with open(self.defloc) as df:
                 data = json.load(df)
-            if(len(data) == 0):
+            if(len(data) == 0): #check if file is empty
                 break
             for i,j in data.items():
-                if("ttl" in j):
-                    a = datetime.datetime(j["year"] , j["month"] ,j["date"] ,j["hour"] ,j["minute"] ,j["seconds"])
-                    if(datetime.datetime.now() > a + datetime.timedelta(seconds = j["ttl"])):
+                if("ttl" in j): #If TTL property of specified with the value
+                    a = datetime.datetime(j["year"] , j["month"] ,j["date"] ,j["hour"] ,j["minute"] ,j["seconds"]) #Get the time of insertion from the 
+                    if(datetime.datetime.now() > a + datetime.timedelta(seconds = j["ttl"])): #Check for the condition with current time,ttl and time of insertion
                         self.delete(i)
-                        print("Sucessfully deleted using TTL")
-                        #print(str(i) + " " + "yes, time to delete")
-                    else:
-                        print(str(i) + " " + "no yet")
+                        print(str(i) + " " + "Sucessfully deleted using TTL")
+                    # else:
+                    #     print(str(i) + " " + "no yet")
                 # print(a , end = " ")
                 # print(j["ttl"] , end = " ")
                 # print()
@@ -71,7 +72,7 @@ class store:
 
 
         #print(dic)
-    def read(self , key):
+    def read(self , key): #Return the value
         with open(self.defloc, 'r') as data_file: #Read the .json file
             keyss = json.load(data_file)
         if(key in keyss): #Check if key is present
@@ -79,7 +80,7 @@ class store:
         else:
             print("Key not found") #If key not found 
     
-    def delete(self , key):
+    def delete(self , key): #Delete the key-value pair
         with open(self.defloc) as df: #Read the json file
             data = json.load(df)
         if(key not in data): #If key not found
@@ -101,6 +102,6 @@ if __name__ == "__main__":
     cls.create("bheem" , {"age":80 , "height": 10 , "ttl" : 5})
     cls.create("rajesh" , {"age":71 , "height": 10 })
     cls.read("raj")
-    t1 = threading.Thread(cls.ttl())
+    t1 = threading.Thread(cls.ttl()) #Run a separate thread for TTL detection
     t1.start()
     
