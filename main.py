@@ -1,5 +1,7 @@
 #Candidate -> Harsh PV
 #Email -> harsh.pv07@gmail.com 
+# Read README.md to run the file
+
 
 import os,json,datetime,heapq,threading
 from threading import Thread
@@ -34,7 +36,7 @@ class store:
                     if(datetime.datetime.now() > a + datetime.timedelta(seconds = j["ttl"])): #Check for the condition with current time,ttl and time of insertion
                         self.delete(i)
                         self.del_cnt -= 1
-                        print(str(i) + " " + "Sucessfully deleted using TTL")
+                        print(str(i) + " " + "sucessfully deleted using TTL")
             if(self.del_cnt == 0): #Break and Kill thread when all TTL Keys have expired
                 print("______All operations done______")
                 break
@@ -105,15 +107,19 @@ if __name__ == "__main__":
     
     cls = store("./data_store.json") #define the location of the json store file (or) keep it as "store(None)"
     
+    
     #Perform all operations here
     cls.create("kumar" , {"age":20 , "height": 170}) #cls.create("key" ,"Json Object")
-    cls.create("raj" , {"age":80 , "height": 10 , "ttl" : 10})  #Example with TTL
-    cls.create("giri" , {"age":80 , "height": 10 , "ttl" : 5})
-    cls.create("rajesh" , {"age":71 , "height": 10 })
+    cls.create("raj" , {"age":80 , "height": 10}) #Record creation Example
+    cls.create("giriqwertyuiasdfghjkzxcvbnmsdfbsjdfb" , {"age":80 , "height": 10 , "ttl" : 5}) #Example of oversized key
+    cls.create("rajesh" , {"age":71 , "height": 10 }) #Record creation Example
+    cls.create("giri" , {"age":80 , "height": 10 , "ttl" : 5}) #Example of TTL
     cls.read("raj") #Data Read Example
+    cls.read("jacob")  #Read unknown key Example
     cls.delete("kumar") #Delete Example
     cls.delete("kumar") #Delete for unknown data 
     
+
     t1 = threading.Thread(cls.ttl()) #Run a separate thread for TTL detection
     t1.start()
     
