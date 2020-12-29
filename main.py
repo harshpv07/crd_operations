@@ -1,3 +1,6 @@
+#Candidate -> Harsh PV
+#Email -> harsh.pv07@gmail.com 
+
 import os,json,datetime,heapq,threading
 from threading import Thread
 
@@ -72,7 +75,6 @@ class store:
                             pass
 
 
-        #print(self.del_cnt)
 
     def read(self , key): #Return the value
         with open(self.defloc, 'r') as data_file: #Read the .json file
@@ -81,6 +83,8 @@ class store:
             print(keyss[key]) #return value of key
         else:
             print("Key " + str(key) + " not found") #If key not found 
+    
+
     
     def delete(self , key): #Delete the key-value pair
         with open(self.defloc) as df: #Read the json file
@@ -98,7 +102,10 @@ class store:
 
 
 if __name__ == "__main__":
-    cls = store("C:/Users/PREMRAJ/Desktop/crd_operations/data_store.json") #define the location of the file (or) keep it as "store(None)"
+    
+    cls = store("./data_store.json") #define the location of the json store file (or) keep it as "store(None)"
+    
+    #Perform all operations here
     cls.create("kumar" , {"age":20 , "height": 170}) #cls.create("key" ,"Json Object")
     cls.create("raj" , {"age":80 , "height": 10 , "ttl" : 10})  #Example with TTL
     cls.create("giri" , {"age":80 , "height": 10 , "ttl" : 5})
@@ -106,6 +113,7 @@ if __name__ == "__main__":
     cls.read("raj") #Data Read Example
     cls.delete("kumar") #Delete Example
     cls.delete("kumar") #Delete for unknown data 
+    
     t1 = threading.Thread(cls.ttl()) #Run a separate thread for TTL detection
     t1.start()
     
